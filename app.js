@@ -38,9 +38,12 @@ app.factory('profileFactory', function($http) {
         addProfile: function($scope) {
             var parameter = JSON.stringify({email:$scope.user.email, firstName: $scope.user.firstName, lastName: $scope.user.lastName, 
             displayName: $scope.user.displayName, description: $scope.user.description, department: $scope.user.department, team: $scope.user.team});
+            
             var response = $http({
                 method: 'POST',
-                url: 'http://zware-ngnewapi.azurewebsites.net/api/developersamim_at_gmail_com/profiles',
+                //url: 'http://zware-ngnewapi.azurewebsites.net/api/developersamim_at_gmail_com/profiles',
+                url: 'https://localhost:5001/api/profile',
+                contentType: "application/json",
                 data: parameter})
 
             .then(function (response){
