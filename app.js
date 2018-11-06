@@ -58,7 +58,8 @@ app.factory('profileFactory', function($http) {
         getAllProfile: function($scope){
             var response = $http({
                 method: 'GET',
-                url: 'http://zware-ngnewapi.azurewebsites.net/api/developersamim_at_gmail_com/profiles'
+                //url: 'http://zware-ngnewapi.azurewebsites.net/api/developersamim_at_gmail_com/profiles'
+                url: 'https://localhost:5001/api/profile'
             }).then( function (response){
                 $scope.profileList = response.data;
             }, function(error){
