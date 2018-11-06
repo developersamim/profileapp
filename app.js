@@ -14,15 +14,25 @@ app.config(function($routeProvider) {
 app.controller('ProfileController', function($scope, profileFactory) {
   $scope.message = 'Hello from ProfileController';
   $scope.user = {};
+  $scope.profileList = [];
+  $scope.modaltitle = 'Success';
+  $scope.modaltext = 'Profile created successfully';
   $scope.add = function(){
     console.log(this.user.email);
-    profileFactory.addProfile($scope);
+    $('#myModal').modal('show');
+    $scope.user = {};
+    //profileFactory.addProfile($scope);
   }
+
+    // at the bottom of your controller
+    var init = function () {
+        profileFactory.getAllProfile($scope);
+    };
+    // and fire it after definition
+    init();
 });
 
 app.factory('profileFactory', function($http) {
-    var loggedIn = false;
-    var toState;
 
     return {
 
@@ -35,9 +45,24 @@ app.factory('profileFactory', function($http) {
                 data: parameter})
 
             .then(function (response){
-
+                $('#myModal').modal('show');
+                $scope.user = {};
             },function (error){
-         
+                $scope.modaltitle = 'Error';
+                $scope.modaltext = 'Something went wrong. Please try later!';
+                $('#myModal').modal('show');
+            });
+        },
+
+        getAllProfile: function($scope){
+            var response = $http({
+                method: 'GET',
+                url: 'http://zware-ngnewapi.azurewebsites.net/api/developersamim_at_gmail_com/profiles'
+            }).then( function (response){
+                debugger;
+                $scope.profileList = response.data;
+            }, function(error){
+
             });
         }
     };
