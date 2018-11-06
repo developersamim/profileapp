@@ -19,9 +19,8 @@ app.controller('ProfileController', function($scope, profileFactory) {
   $scope.modaltext = 'Profile created successfully';
   $scope.add = function(){
     console.log(this.user.email);
-    $('#myModal').modal('show');
-    $scope.user = {};
-    //profileFactory.addProfile($scope);
+
+    profileFactory.addProfile($scope);
   }
 
     // at the bottom of your controller
@@ -45,8 +44,10 @@ app.factory('profileFactory', function($http) {
                 data: parameter})
 
             .then(function (response){
+                debugger;
                 $('#myModal').modal('show');
                 $scope.user = {};
+                $scope.profileList.unshift(response.data);
             },function (error){
                 $scope.modaltitle = 'Error';
                 $scope.modaltext = 'Something went wrong. Please try later!';
@@ -59,7 +60,6 @@ app.factory('profileFactory', function($http) {
                 method: 'GET',
                 url: 'http://zware-ngnewapi.azurewebsites.net/api/developersamim_at_gmail_com/profiles'
             }).then( function (response){
-                debugger;
                 $scope.profileList = response.data;
             }, function(error){
 
